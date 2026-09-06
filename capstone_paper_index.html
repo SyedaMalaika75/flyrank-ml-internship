@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FlyRank ML Capstone - Syeda Malaika</title>
+<style>body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;padding:0 20px;line-height:1.6;color:#17302f}h1,h2{color:#0d5449}table{border-collapse:collapse;width:100%;margin:16px 0}th,td{border:1px solid #ccd8d6;padding:9px;text-align:left}th{background:#eef5f3}.note{background:#f3f8f6;padding:14px;border-left:4px solid #0d806b}</style></head><body>
+<h1>Ranking Search-Visibility Decline Signals for Content Review Prioritization</h1>
+<p><b>Syeda Malaika - FlyRank Machine Learning Capstone</b></p>
+<h2>Abstract</h2>
+<p>This capstone asks whether public-safe page-level content and search-performance signals can help rank pages associated with observed search-visibility decline. A leakage-safe Logistic Regression model was evaluated with a client-grouped holdout split and compared with a simple rule baseline on the same held-out pages. Logistic Regression improved Precision@20 from 0.40 to 0.70 and Precision@50 from 0.42 to 0.72. The result is directional decision-support for prioritizing manual content review, not a guarantee of future decline or proof that a refresh causes ranking improvement.</p>
+<h2>1. Introduction / Problem Statement</h2>
+<p>Content teams often have more pages than they can review at once. This work asks which pages should be reviewed first and whether a learned ranking can improve that prioritization over transparent rules.</p>
+<h2>2. Data</h2>
+<p>The unit of analysis is one anonymized content page. The evaluation uses 23,837 training rows and 6,163 testing rows with an 80/20 split grouped by client. The model uses 32 public-safe content metadata and trailing 90-day performance features. Client names, domains, URLs and private queries are excluded.</p>
+<h2>3. Methodology</h2>
+<p>Logistic Regression is used as a ranking model. The target marks observed downward visibility movement. Outcome-derived fields such as trend_direction and trend_pct, identifiers, and recent trend-window fields are excluded. The rule baseline prioritizes stale visible pages and visible low-CTR pages, with impressions as a tie-breaker. Both approaches use the same held-out clients.</p>
+<h2>4. Results</h2>
+<table><tr><th>Approach</th><th>Test base rate</th><th>Precision@20</th><th>Precision@50</th></tr>
+<tr><td>Week 4 rule baseline</td><td>0.511</td><td>0.40</td><td>0.42</td></tr>
+<tr><td>Logistic Regression</td><td>0.511</td><td>0.70</td><td>0.72</td></tr></table>
+<p>The learned model identified 36 observed decline cases among its top 50 ranked pages; 14 top-50 recommendations were false positives.</p>
+<h2>5. Limitations & Honest Framing</h2>
+<ul><li>The model measures associations, not causation.</li><li>A high score does not guarantee future decline.</li><li>Some decline cases are ranked below the top 50.</li><li>Results are specific to this anonymized dataset and evaluation design.</li><li>Human review should remain part of the decision process.</li></ul>
+<h2>6. Ranked Recommendations</h2>
+<ol><li>Review the highest-scored pages first.</li><li>Prioritize pages with meaningful visibility and enough evidence for review.</li><li>Use stale-content and low-CTR signals as transparent reasons for investigation.</li><li>Require human confirmation before changing content.</li><li>Monitor outcomes after any refresh or intervention.</li></ol>
+<h2>7. Reproducibility</h2>
+<p>Repository: <a href="https://github.com/SyedaMalaika75/flyrank-ml-internship">github.com/SyedaMalaika75/flyrank-ml-internship</a></p>
+<p>Supporting notebooks: <a href="https://github.com/SyedaMalaika75/flyrank-ml-internship/blob/main/work/notebooks/w05_model.ipynb">Week 5 model</a> and <a href="https://github.com/SyedaMalaika75/flyrank-ml-internship/blob/main/work/notebooks/w06_validation_audit.ipynb">Week 6 validation audit</a>.</p>
+<h2>8. Acknowledgments & Data Credit</h2>
+<p>Built on the FlyRank ML Internship dataset. Program and data credit: <a href="https://flyrank.ai">FlyRank</a>.</p>
+<h2>9. Conclusion</h2>
+<p>On the client-grouped held-out evaluation, Logistic Regression produced a more precise ranking than the rule baseline. The practical conclusion is limited but useful: the learned score can improve the order in which a team reviews pages associated with observed decline patterns, as directional decision-support rather than an automatic action.</p>
+</body></html>
